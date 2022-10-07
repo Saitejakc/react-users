@@ -1,0 +1,21 @@
+#table {
+  color: #2f63ac;
+  font-family: arial, sans-serif;
+  /* border: 2px solid #91aace; */
+  border-collapse: collapse;
+  height: fit-content;
+  width: fit-content;
+}
+
+#table h2 {
+  background-color: #0a2e60;
+  text-align: center;
+}
+
+th,
+tr {
+  /* border: 1px solid #dddddd; */
+  border-collapse: collapse;
+  text-align: center;
+  padding: 8px;
+}
