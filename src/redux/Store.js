@@ -8,6 +8,6 @@ const mainReducer = combineReducers({
 
 const commonData = {};
 
-const Store = createStore(mainReducer, commonData, composeWithDevTools());
+const Store = createStore(userReducer);
 
 export default Store;

@@ -1,34 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../ContactPage/Form.css";
 import shortid from "shortid";
-import { useDispatch } from "react-redux";
-import { userRegister } from "../../redux/allAction";
+import { useDispatch, useSelector } from "react-redux";
+import { editUser, userRegister } from "../../redux/allAction";
 
 function Form() {
   const dispatch = useDispatch();
-  // const details = useSelector((state) => {
-  //   return state.user.userData;
-  // });
-  const [inputField, setInputFeild] = useState({
-    name: "",
-    email: "",
-    phone: "",
-  });
+
+  const userToUpdate = useSelector(state => state.userToEdit)
+
+  const [inputField, setInputFeild] = useState();
+
+  const [useridKey, setuseridKey] = useState();
 
   const inputHandler = (e) => {
     setInputFeild({ ...inputField, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    if (userToUpdate) {
+      setInputFeild(userToUpdate);
+      setuseridKey(userToUpdate.id);
+    }
+  }, [userToUpdate])
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    Object.assign(inputField, { id: shortid.generate() });
-    // console.log(inputField);
+    Object.assign(inputField, { id: useridKey ?? shortid.generate() });
     dispatch(userRegister(inputField));
+    dispatch(editUser({}));
+    setInputFeild({
+      id: "",
+      name: "",
+      email: "",
+      phone: "",
+    })
   };
-
-  console.log();
-
-  // console.log(details);
+  console.log(inputField);
 
   return (
     <div className="form">
@@ -42,7 +50,7 @@ function Form() {
               type="text"
               name="name"
               placeholder="Your Name"
-              // value={inputField.name}
+              value={inputField?.name}
               onChange={inputHandler}
             />
             <span id="error"></span>
@@ -54,7 +62,7 @@ function Form() {
                 type="email"
                 placeholder="Your E-Mail"
                 name="email"
-                // value={inputField.email}
+                value={inputField?.email}
                 onChange={inputHandler}
               />
               <span id="emailerror"></span>
@@ -65,7 +73,7 @@ function Form() {
                 type="phone"
                 placeholder="Mobile"
                 name="phone"
-                // value={inputField.phone}
+                value={inputField?.phone}
                 onChange={inputHandler}
               />
               <span id="numerror"></span>

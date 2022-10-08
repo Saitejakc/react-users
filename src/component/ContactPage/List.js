@@ -1,8 +1,6 @@
 import React from "react";
-// import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteUser } from "../../redux/allAction";
-import { editUser } from "../../redux/allAction";
+import { deleteUser , editUser } from "../../redux/allAction";
 
 function List({ user }) {
   const dispatch = useDispatch();
